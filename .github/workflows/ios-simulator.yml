@@ -1,4 +1,4 @@
-name: IOS
+name: iOS
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: build on ios
-    runs-on: macos
+    runs-on: macos-latest
     
     steps:
     - uses: actions/checkout@v1
