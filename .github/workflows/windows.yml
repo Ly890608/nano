@@ -1,0 +1,20 @@
+name: Windows
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: build on windows
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: prepare
+      run: mkdir build
+    - name: cmake
+      run: cd build ; cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release
+    - name: build
+      run: cmake --build build --config Release
