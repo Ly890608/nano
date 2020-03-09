@@ -15,6 +15,6 @@ jobs:
     - name: prepare
       run: mkdir build
     - name: cmake
-      run: cd build ; .. -G Xcode -DCMAKE_TOOLCHAIN_FILE=../cmake_module/ios.toolchain.cmake -DPLATFORM=SIMULATOR64 -DCMAKE_BUILD_TYPE=Release
+      run: cd build ; cmake .. -G Xcode -DCMAKE_TOOLCHAIN_FILE=../cmake_module/ios.toolchain.cmake -DPLATFORM=SIMULATOR64 -DCMAKE_BUILD_TYPE=Release
     - name: build
       run: xcodebuild -scheme ALL_BUILD -configuration Release
