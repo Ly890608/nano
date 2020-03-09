@@ -1,5 +1,7 @@
 # nano library
 
+![Windows Build Status](https://github.com/lyLoveSharon/chata/workflows/Windows/badge.svg)
+
 ## Build IOS
 
 ```bash
