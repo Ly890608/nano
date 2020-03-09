@@ -1,7 +1,7 @@
 # nano library
 
 ![Windows Build Status](https://github.com/lyLoveSharon/nano/workflows/Windows/badge.svg)
-![Windows Build Status](https://github.com/lyLoveSharon/nano/workflows/IOS/badge.svg)
+![iOS Build Status](https://github.com/lyLoveSharon/nano/workflows/iOS/badge.svg)
 
 ## Build IOS
 
