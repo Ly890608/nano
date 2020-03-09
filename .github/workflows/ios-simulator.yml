@@ -17,4 +17,4 @@ jobs:
     - name: cmake
       run: cd build ; cmake .. -G Xcode -DCMAKE_TOOLCHAIN_FILE=../cmake_module/ios.toolchain.cmake -DPLATFORM=SIMULATOR64 -DCMAKE_BUILD_TYPE=Release
     - name: build
-      run: xcodebuild -scheme ALL_BUILD -configuration Release
+      run: cd build ; xcodebuild -scheme ALL_BUILD -configuration Release
