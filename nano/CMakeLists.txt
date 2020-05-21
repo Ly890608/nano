@@ -57,7 +57,7 @@ if(APPLE AND NOT IOS)
     target_link_libraries(${TARGET} PRIVATE "-framework Cocoa")
 endif()
 
-if(NANO_SUPPORTS_METAL)
+if(APPLE)
     target_link_libraries(${TARGET} PUBLIC "-framework Metal -framework CoreVideo")
 endif()
 

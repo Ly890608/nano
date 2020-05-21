@@ -13,18 +13,10 @@ project(nano_project)
 # Options
 # ==================================================================================================
 option(NANO_BUILD_SHARED_LIBS "Build as a shared library" OFF)
-option(NANO_ENABLE_LTO "Enable link-time optimizations if supported by the compiler" OFF)
+option(NANO_ENABLE_LTO "Enable link-time optimizations if supported by the compiler" ON)
 
 if(WIN32)
     option(NANO_USE_STATIC_CRT "Link against the static runtime libraries" ON)
-endif()
-
-if(APPLE)
-    option(NANO_SUPPORTS_METAL "Support Metal" ON)
-endif()
-
-if(WEBGL)
-    option(NANO_USE_WEBGL2 "Use WebGL2.0" ON)
 endif()
 
 # ==================================================================================================
@@ -132,18 +124,9 @@ if(LINUX)
     link_libraries(libc++abi.a)
 endif()
 
-if(CYGWIN)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -fno-rtti")
-endif()
-
 if(CLANG_CL OR MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE")
-endif()
-
-if(UNIX AND CMAKE_GENERATOR STREQUAL "Ninja")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcolor-diagnostics")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
 endif()
 
 # ==================================================================================================
