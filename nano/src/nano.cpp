@@ -1,4 +1,4 @@
-#include "nano.h"
+#include "nano/nano.h"
 
 const char *nano_version()
 {

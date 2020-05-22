@@ -76,6 +76,28 @@ endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # ==================================================================================================
+# OS specific
+# ==================================================================================================
+if (WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+    if (${NANO_USE_STATIC_CRT})
+        set(CRT_FLAGS_RELEASE "/MT")
+        set(CRT_FLAGS_DEBUG "/MTd")
+    else()
+        set(CRT_FLAGS_RELEASE "/MD")
+        set(CRT_FLAGS_DEBUG "/MDd")
+    endif()
+
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${CRT_FLAGS_RELEASE} /Z7")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${CRT_FLAGS_RELEASE} /Z7")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CRT_FLAGS_RELEASE} /Zi")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${CRT_FLAGS_RELEASE} /Zi")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CRT_FLAGS_DEBUG} /Z7")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${CRT_FLAGS_DEBUG} /Z7")
+endif()
+
+# ==================================================================================================
 # Set output directories
 # ==================================================================================================
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/)

@@ -33,8 +33,11 @@ add_library(nano::${TARGET} ALIAS ${TARGET})
 # ==================================================================================================
 target_sources(${TARGET}
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/nano.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/Core/Application.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/Core/BaseDefines.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/nano.h
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/nano.cpp
 )
 

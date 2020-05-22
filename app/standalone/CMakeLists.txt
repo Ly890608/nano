@@ -12,6 +12,14 @@ project(${TARGET}
 		DESCRIPTION "Standalone For Desktop" 
 )
 
-add_executable(${TARGET})
-target_sources(${TARGET} PRIVATE main.cpp)
+if(WIN32)
+	set(NANO_APP WIN32)
+	set(NANO_PLATFORM windows)
+else()
+	set(NANO_APP)
+	set(NANO_PLATFORM unix)
+endif()
+
+add_executable(${TARGET} ${NANO_APP})
+target_sources(${TARGET} PRIVATE ${NANO_PLATFORM}/main.cpp)
 target_link_libraries(${TARGET} PRIVATE nano::nano)
