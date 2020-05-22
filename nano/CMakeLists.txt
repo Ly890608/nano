@@ -20,7 +20,7 @@ project(${TARGET}
 # ==================================================================================================
 if(NANO_BUILD_SHARED_LIBS)
     add_library(${TARGET} SHARED)
-	target_compile_definitions(${TARGET} PRIVATE NANO_EXPORT)
+    target_compile_definitions(${TARGET} PRIVATE NANO_EXPORT)
 else()
     add_library(${TARGET} STATIC)
 	target_compile_definitions(${TARGET} PUBLIC NANO_STATIC)
@@ -49,21 +49,6 @@ target_include_directories(${TARGET}
 # ==================================================================================================
 # Dependencies
 # ==================================================================================================
-if(ANDROID)
-    target_link_libraries(${TARGET} PUBLIC GLESv3 EGL android)
-endif()
-
-if(APPLE AND NOT IOS)
-    target_link_libraries(${TARGET} PRIVATE "-framework Cocoa")
-endif()
-
-if(APPLE)
-    target_link_libraries(${TARGET} PUBLIC "-framework Metal -framework CoreVideo")
-endif()
-
-if(LINUX)
-    target_link_libraries(${TARGET} PRIVATE dl)
-endif()
 
 # ==================================================================================================
 # Compiler flags
@@ -74,59 +59,6 @@ set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
-)
-
-if(MSVC OR CLANG_CL)
-    set(OPTIMIZATION_FLAGS
-        /fp:fast
-    )
-elseif(WEBGL)
-    set(OPTIMIZATION_FLAGS -fvisibility=hidden -fvisibility-inlines-hidden)
-else()
-    set(OPTIMIZATION_FLAGS
-        -ffast-math
-        -ffp-contract=fast
-        -fvisibility=hidden
-        -fvisibility-inlines-hidden
-        -fstrict-vtable-pointers
-    )
-endif()
-
-set(LINUX_LINKER_OPTIMIZATION_FLAGS
-        -Wl,--exclude-libs
-)
-
-set(LINUX_COMPILER_FLAGS
-        -fPIC
-)
-
-if(MSVC_NATIVE)
-    set(NANO_WARNINGS -W0)
-else()
-    set(NANO_WARNINGS
-            -Wextra -Wno-unused-parameter
-            -Wextra-semi -Wnewline-eof -Wdeprecated -Wundef
-            -Wgnu-conditional-omitted-operand
-            -Wweak-vtables -Wnon-virtual-dtor -Wclass-varargs -Wimplicit-fallthrough
-            -Wover-aligned
-    )
-endif()
-
-if(CLANG_CL)
-    set(NANO_WARNINGS /W4 ${NANO_WARNINGS})
-else()
-    set(NANO_WARNINGS -Wall ${NANO_WARNINGS})
-endif()
-
-target_compile_options(${TARGET} PRIVATE
-        ${NANO_WARNINGS}
-        $<$<CONFIG:Release>:${OPTIMIZATION_FLAGS}>
-        $<$<AND:$<PLATFORM_ID:Darwin>,$<CONFIG:Release>>:${DARWIN_OPTIMIZATION_FLAGS}>
-        $<$<PLATFORM_ID:Linux>:${LINUX_COMPILER_FLAGS}>
-)
-
-target_link_libraries(${TARGET} PRIVATE
-        $<$<AND:$<PLATFORM_ID:Linux>,$<CONFIG:Release>>:${LINUX_LINKER_OPTIMIZATION_FLAGS}>
 )
 
 # ==================================================================================================
