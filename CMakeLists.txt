@@ -22,7 +22,7 @@ option(NANO_BUILD_SHARED_LIBS "Build as a shared library" OFF)
 option(NANO_BUILD_APP "Build app" ON)
 option(NANO_ENABLE_POSITION_INDEPENDENT_CODE "Enable Position independent code for SHARED or MODULE libraries" ON)
 option(NANO_ENABLE_CCACHE "Enable Ccache Program if supported by the compiler" ON)
-option(NANO_ENABLE_LTO "Enable link-time optimizatioOFFns if supported by the compiler" ON)
+option(NANO_ENABLE_LTO "Enable link-time optimizations if supported by the compiler" ON)
 
 if(WIN32)
     option(NANO_USE_STATIC_CRT "Link against the static runtime libraries" ON)
