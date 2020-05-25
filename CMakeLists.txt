@@ -23,10 +23,7 @@ option(NANO_BUILD_APP "Build app" ON)
 option(NANO_ENABLE_POSITION_INDEPENDENT_CODE "Enable Position independent code for SHARED or MODULE libraries" ON)
 option(NANO_ENABLE_CCACHE "Enable Ccache Program if supported by the compiler" ON)
 option(NANO_ENABLE_LTO "Enable link-time optimizations if supported by the compiler" ON)
-
-if(WIN32)
-    option(NANO_USE_STATIC_CRT "Link against the static runtime libraries" ON)
-endif()
+option(NANO_BUILD_NOOP_GRAPHICS "Build Noop Graphics" OFF)
 
 # ==================================================================================================
 # Build Type
@@ -74,28 +71,6 @@ endif()
 # IDE Friendly
 # ==================================================================================================
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-# ==================================================================================================
-# OS specific
-# ==================================================================================================
-if (WIN32)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-
-    if (${NANO_USE_STATIC_CRT})
-        set(CRT_FLAGS_RELEASE "/MT")
-        set(CRT_FLAGS_DEBUG "/MTd")
-    else()
-        set(CRT_FLAGS_RELEASE "/MD")
-        set(CRT_FLAGS_DEBUG "/MDd")
-    endif()
-
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${CRT_FLAGS_RELEASE} /Z7")
-    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${CRT_FLAGS_RELEASE} /Z7")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CRT_FLAGS_RELEASE} /Zi")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${CRT_FLAGS_RELEASE} /Zi")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CRT_FLAGS_DEBUG} /Z7")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${CRT_FLAGS_DEBUG} /Z7")
-endif()
 
 # ==================================================================================================
 # Set output directories

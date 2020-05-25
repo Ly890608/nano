@@ -3,6 +3,7 @@
 
 namespace Nano
 {
+struct GraphicsCore;
 class NANO_API Application
 {
   public:
@@ -15,5 +16,6 @@ class NANO_API Application
     void OnRender();
 
   private:
+    GraphicsCore *_GraphicsCore = nullptr;
 };
 } // namespace Nano
