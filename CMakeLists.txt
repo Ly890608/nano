@@ -24,6 +24,7 @@ option(NANO_ENABLE_POSITION_INDEPENDENT_CODE "Enable Position independent code f
 option(NANO_ENABLE_CCACHE "Enable Ccache Program if supported by the compiler" ON)
 option(NANO_ENABLE_LTO "Enable link-time optimizations if supported by the compiler" ON)
 option(NANO_BUILD_NOOP_GRAPHICS "Build Noop Graphics" OFF)
+option(NANO_BUILD_LOG "Enable Output Log Message" ON)
 
 # ==================================================================================================
 # Build Type
@@ -89,6 +90,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # Do NOT add path to dependencies f
 # ==================================================================================================
 # Sub-projects
 # ==================================================================================================
+add_subdirectory(3rd)
 add_subdirectory(nano)
 
 if(NANO_BUILD_APP)

@@ -1,7 +1,7 @@
 #include "Graphics/D3D12/GraphicsCore.h"
+#include "Graphics/D3D12/GraphicsUtils.h"
 #include <stdint.h>
 #include <stdio.h>
-#define MY_IID_PPV_ARGS IID_PPV_ARGS
 #define D3D12_GPU_VIRTUAL_ADDRESS_NULL ((D3D12_GPU_VIRTUAL_ADDRESS)0)
 #define D3D12_GPU_VIRTUAL_ADDRESS_UNKNOWN ((D3D12_GPU_VIRTUAL_ADDRESS)-1)
 #include <wrl.h>
@@ -9,14 +9,6 @@
 #include <dxgi1_6.h>
 #else
 #include <dxgi1_4.h> // For WARP
-#endif
-#ifndef SAFE_RELEASE
-#define SAFE_RELEASE(x) \
-    if (x != nullptr)   \
-    {                   \
-        x->Release();   \
-        x = nullptr;    \
-    }
 #endif
 #define ASSERT(isTrue, ...) (void)(isTrue)
 #define WARN_ONCE_IF(isTrue, ...) (void)(isTrue)
@@ -42,14 +34,14 @@ bool GraphicsCoreD3D12::Init()
     Microsoft::WRL::ComPtr<ID3D12Device> pDevice;
 #if _DEBUG
     Microsoft::WRL::ComPtr<ID3D12Debug> debugInterface;
-    if (SUCCEEDED(D3D12GetDebugInterface(MY_IID_PPV_ARGS(&debugInterface))))
+    if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugInterface))))
         debugInterface->EnableDebugLayer();
     else
         printf("WARNING:  Unable to enable D3D12 debug validation layer\n");
 #endif
 
     Microsoft::WRL::ComPtr<IDXGIFactory4> dxgiFactory;
-    ASSERT_SUCCEEDED(CreateDXGIFactory2(0, MY_IID_PPV_ARGS(&dxgiFactory)));
+    ASSERT_SUCCEEDED(CreateDXGIFactory2(0, IID_PPV_ARGS(&dxgiFactory)));
 
     Microsoft::WRL::ComPtr<IDXGIAdapter1> pAdapter;
 
@@ -66,7 +58,7 @@ bool GraphicsCoreD3D12::Init()
             if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE)
                 continue;
 
-            if (desc.DedicatedVideoMemory > MaxSize && SUCCEEDED(D3D12CreateDevice(pAdapter.Get(), D3D_FEATURE_LEVEL_11_0, MY_IID_PPV_ARGS(&pDevice))))
+            if (desc.DedicatedVideoMemory > MaxSize && SUCCEEDED(D3D12CreateDevice(pAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&pDevice))))
             {
                 pAdapter->GetDesc1(&desc);
                 //printf("D3D12-capable hardware found:  %s (%u MB)\n", desc.Description, desc.DedicatedVideoMemory >> 20);
@@ -85,7 +77,7 @@ bool GraphicsCoreD3D12::Init()
         else
             printf("Failed to find a hardware adapter.  Falling back to WARP.\n");
         ASSERT_SUCCEEDED(dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&pAdapter)));
-        ASSERT_SUCCEEDED(D3D12CreateDevice(pAdapter.Get(), D3D_FEATURE_LEVEL_11_0, MY_IID_PPV_ARGS(&pDevice)));
+        ASSERT_SUCCEEDED(D3D12CreateDevice(pAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&pDevice)));
         _Device = pDevice.Detach();
     }
 #ifndef RELEASE
@@ -115,7 +107,7 @@ bool GraphicsCoreD3D12::Init()
 
 #if _DEBUG
     ID3D12InfoQueue *pInfoQueue = nullptr;
-    if (SUCCEEDED(_Device->QueryInterface(MY_IID_PPV_ARGS(&pInfoQueue))))
+    if (SUCCEEDED(_Device->QueryInterface(IID_PPV_ARGS(&pInfoQueue))))
     {
         // Suppress whole categories of messages
         //D3D12_MESSAGE_CATEGORY Categories[] = {};
@@ -202,7 +194,7 @@ void GraphicsCoreD3D12::Destroy()
     }
 #endif
 
-    SAFE_RELEASE(_Device);
+    SafeRelease(_Device);
 }
 
 //! Graphics Core Implement

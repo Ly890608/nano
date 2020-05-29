@@ -41,7 +41,8 @@ if(${NANO_BUILD_NOOP_GRAPHICS})
 elseif(WIN32)
     message(STATUS "Nano Graphcis Type is D3D12.")
     set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsCore.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsCore.h)
+                          ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsCore.h
+                          ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsUtils.h)
     set(NANO_GRAPHICS_TYPE ${NANO_GRAPHICS_D3D12})
 else()
     message(STATUS "Nano Graphcis Type is Unknown, Set to Noop.")
@@ -50,9 +51,9 @@ else()
 endif()
 
 if(WIN32)
-set(NANO_PLATFORM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform/Windows/MinWindows.h)
+    set(NANO_PLATFORM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform/Windows/MinWindows.h)
 else()
-set(NANO_PLATFORM_SRC)
+    set(NANO_PLATFORM_SRC)
 endif()
 
 target_sources(${TARGET}
@@ -62,6 +63,8 @@ target_sources(${TARGET}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/nano.h
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Log.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Log.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/GraphicsCore.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/nano.cpp
         ${NANO_GRAPHICS_SRC}
@@ -83,6 +86,8 @@ if(${NANO_GRAPHICS_TYPE} EQUAL ${NANO_GRAPHICS_D3D12})
     target_link_libraries(${TARGET} PRIVATE "d3d12.lib" "dxgi.lib")
 endif()
 
+target_link_libraries(${TARGET} PRIVATE fmt::fmt)
+
 # ==================================================================================================
 # Compiler flags
 # ==================================================================================================
@@ -92,6 +97,16 @@ set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
+)
+
+if(${NANO_BUILD_LOG})
+    set(NANO_USE_LOG_VALUE 1)
+else()
+    set(NANO_USE_LOG_VALUE 0)
+endif()
+
+target_compile_definitions(${TARGET} PRIVATE 
+    NANO_USE_LOG=${NANO_USE_LOG_VALUE}
 )
 
 # ==================================================================================================
