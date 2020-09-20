@@ -1,4 +1,4 @@
-#include "Graphics/GraphicsCore.h"
+#include "nano/Graphics/GraphicsCore.h"
 
 namespace Nano
 {

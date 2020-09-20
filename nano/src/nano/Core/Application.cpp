@@ -1,6 +1,6 @@
 #include "nano/Core/Application.h"
-#include "Core/Log.h"
-#include "Graphics/GraphicsCore.h"
+#include "nano/Core/Log.h"
+#include "nano/Graphics/GraphicsCore.h"
 
 namespace Nano
 {
@@ -23,6 +23,7 @@ void Application::OnDestroy()
 {
     _GraphicsCore->Destroy();
     GraphicsCore::Destroy(_GraphicsCore);
+    NANO_INFO("Application::OnDestroy\n");
 }
 
 void Application::OnUpdate()

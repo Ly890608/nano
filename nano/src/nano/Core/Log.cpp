@@ -1,4 +1,4 @@
-#include "Core/Log.h"
+#include "nano/Core/Log.h"
 #include <stdio.h>
 #ifdef NANO_PLATFORM_ANDROID
 #include <android/log.h>
@@ -30,10 +30,10 @@ void Log::Print(ELogLevel level, std::string_view message)
     case LOG_DEBUG:
     case LOG_INFO:
     case LOG_WARNING:
-        fprintf(stdout, "%s", message.data());
+        fprintf(stdout, "%s\n", message.data());
         break;
     case LOG_ERROR:
-        fprintf(stderr, "%s", message.data());
+        fprintf(stderr, "%s\n", message.data());
         break;
     }
 #endif

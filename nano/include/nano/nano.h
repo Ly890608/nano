@@ -1,6 +1,6 @@
 #pragma once
-#include "nano/Core/Application.h"
-#include "nano/Core/BaseDefines.h"
+#include "Core/Application.h"
+#include "Core/BaseDefines.h"
 
 #ifdef __cplusplus
 extern "C"

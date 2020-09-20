@@ -1,5 +1,7 @@
 #pragma once
 #include "nano/Core/BaseDefines.h"
+#include "nano/Platform/Windows/MinWindows.h"
+#include <exception>
 
 namespace Nano
 {
@@ -10,6 +12,14 @@ NANO_FORCEINLINE void SafeRelease(T &ptr)
     {
         ptr->Release();
         ptr = nullptr;
+    }
+}
+
+NANO_FORCEINLINE void ThrowIfFailed(HRESULT hr)
+{
+    if (FAILED(hr))
+    {
+        throw std::exception();
     }
 }
 } // namespace Nano

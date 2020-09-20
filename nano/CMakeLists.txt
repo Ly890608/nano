@@ -36,22 +36,22 @@ set(NANO_GRAPHICS_D3D12 1)
 
 if(${NANO_BUILD_NOOP_GRAPHICS})
     message(STATUS "Nano Graphcis Type is Noop.")
-    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/Noop/GraphicsCore.cpp)
+    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/Noop/GraphicsCore.cpp)
     set(NANO_GRAPHICS_TYPE ${NANO_GRAPHICS_NOOP})
 elseif(WIN32)
     message(STATUS "Nano Graphcis Type is D3D12.")
-    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsCore.cpp
-                          ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsCore.h
-                          ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/D3D12/GraphicsUtils.h)
+    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/D3D12/GraphicsCore.cpp
+                          ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/D3D12/GraphicsCore.h
+                          ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/D3D12/GraphicsUtils.h)
     set(NANO_GRAPHICS_TYPE ${NANO_GRAPHICS_D3D12})
 else()
     message(STATUS "Nano Graphcis Type is Unknown, Set to Noop.")
-    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/Noop/GraphicsCore.cpp)
+    set(NANO_GRAPHICS_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/Noop/GraphicsCore.cpp)
     set(NANO_GRAPHICS_TYPE ${NANO_GRAPHICS_NOOP})
 endif()
 
 if(WIN32)
-    set(NANO_PLATFORM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform/Windows/MinWindows.h)
+    set(NANO_PLATFORM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Platform/Windows/MinWindows.h)
 else()
     set(NANO_PLATFORM_SRC)
 endif()
@@ -62,11 +62,11 @@ target_sources(${TARGET}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/Core/BaseDefines.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/nano/nano.h
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Application.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Log.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Log.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Graphics/GraphicsCore.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Core/Application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Core/Log.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Core/Log.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/Graphics/GraphicsCore.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/nano/nano.cpp
         ${NANO_GRAPHICS_SRC}
         ${NANO_PLATFORM_SRC}
 )
@@ -118,4 +118,4 @@ install(TARGETS ${TARGET}
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
         INCLUDES DESTINATION include
-        )
+)
